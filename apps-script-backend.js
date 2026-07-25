@@ -53,3 +53,25 @@ function getOrCreateFolder_(name) {
   var folders = DriveApp.getFoldersByName(name);
   return folders.hasNext() ? folders.next() : DriveApp.createFolder(name);
 }
+
+// One-off diagnostic: select this function in the Run dropdown and click Run.
+// Simulates a real POST so you can see the actual error (if any) in Execution log,
+// instead of the "e is undefined" error you get from running doPost directly.
+function testDoPost_() {
+  var fakeEvent = {
+    postData: {
+      contents: JSON.stringify({
+        submittedAt: new Date().toISOString(),
+        fullName: 'Test Entry',
+        age: 20,
+        contact: '09171234567',
+        project: 'Test Project',
+        gcashUsername: 'testuser',
+        amount: 1,
+        screenshot: ''
+      })
+    }
+  };
+  var result = doPost(fakeEvent);
+  Logger.log(result.getContent());
+}
